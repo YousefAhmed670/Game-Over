@@ -134,4 +134,33 @@ class Games {
   }
 }
 
-new Games();
+function initNavbarToggle() {
+  const toggler = document.querySelector(".navbar-toggler");
+  const targetSelector = toggler?.getAttribute("data-bs-target");
+  if (!toggler || !targetSelector) {
+    return;
+  }
+
+  const target = document.querySelector(targetSelector);
+  if (!target) {
+    return;
+  }
+
+  let collapseInstance = null;
+  if (typeof bootstrap !== "undefined" && bootstrap.Collapse) {
+    collapseInstance = new bootstrap.Collapse(target, { toggle: false });
+  }
+
+  toggler.addEventListener("click", () => {
+    if (collapseInstance) {
+      collapseInstance.toggle();
+      return;
+    }
+    target.classList.toggle("show");
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  new Games();
+  initNavbarToggle();
+});
