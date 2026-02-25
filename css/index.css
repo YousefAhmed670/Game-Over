@@ -1,136 +1,384 @@
-[data-theme="dark"] {
-    --main-color: #272b30;
-    --seconde-color: #32383e;
-    --color-text: #fff;
-    --btn-main-color: #272729;
- }
- 
- .badge-color {
-    background-color: var(--seconde-color);
- }
- 
+/* ============================================
+   THEME VARIABLES
+   ============================================ */
+@import url("https://fonts.googleapis.com/css2?family=Nerko+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap");
 
- @import url("https://fonts.googleapis.com/css2?family=Nerko+One&display=swap");
- @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap");
- 
- body {
-    font-family: "Comfortaa", cursive;
-    min-height: 100%;
-    min-width: 100%;
-    background-color: var(--main-color);
-    color: var(--color-text);
- }
- 
- h1,
- h2,
- h3,
- h4,
- h5,
- h6 {
-    font-family: "Nerko One", cursive;
-    color: var(--color-text) !important;
- }
- 
- a,
- p,
- span {
-    color: inherit !important;
- }
- 
- ul {
-    list-style-position: inside;
- }
- 
- .nav-item .nav-link.active,
- .nav-item .nav-link:hover {
-    color: #09c !important;
-    transition: color 0.5s;
- }
- 
- ::-webkit-scrollbar {
-    width: 0.625rem;
- }
- 
- ::-webkit-scrollbar-track {
-    background-color: var(--seconde-color);
- }
- 
- ::-webkit-scrollbar-thumb {
-    background-color: var(--main-color);
-    border-radius: 50px;
-    box-shadow: 0 0 5px rgb(0 0 0 / 0.5) inset;
- }
- 
- .home .card {
-    filter: grayscale(0.7);
-    transition: transform 0.5s, filter 0.5s 0.1s;
- }
- 
- header img {
-    max-height: 30vh;
-    object-fit: cover;
- }
- 
- .home .card:hover {
-    transform: scale(1.05);
-    filter: grayscale(0);
- }
- 
- nav {
-    background-color: rgb(58, 73, 123) !important;
- 
-    margin-inline: auto;
-    margin-top: -30px;
-    border-radius: 20px;
-    box-shadow: 0 0 10px rgb(0 0 0 / 0.7);
- }
-  
- .details {
-    background-color: #272729be;
- 
-    backdrop-filter: blur(4px);
-    min-height: 100vh;
- }
-  
- .loading {
-    position: fixed;
-    z-index: 9999;
-    inset: 0;
-    background-color: #272b30e3;
+[data-theme="dark"] {
+  --main-color: #272b30;
+  --seconde-color: #32383e;
+  --color-text: #fff;
+  --btn-main-color: #272729;
+  --nav-bg: rgb(58, 73, 123);
+  --card-hover-shadow: rgba(0, 0, 0, 0.4);
+  --details-bg: #272729be;
+  --loading-bg: #272b30e3;
+  --badge-text: #fff;
+  --close-btn-filter: invert(1);
+}
+
+/* === Light Theme — derived from existing palette === */
+[data-theme="light"] {
+  --main-color: #f0f2f5;
+  --seconde-color: #dde1e7;
+  --color-text: #0d0d1a;
+  --btn-main-color: #cfd4db;
+  --nav-bg: rgb(72, 92, 155);
+  --card-hover-shadow: rgba(0, 0, 0, 0.15);
+  --details-bg: rgba(240, 242, 245, 0.92);
+  --loading-bg: rgba(240, 242, 245, 0.95);
+  --badge-text: #fff;
+  --close-btn-filter: invert(0);
+}
+
+.badge-color {
+  background-color: var(--seconde-color);
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+body {
+  font-family: "Comfortaa", cursive;
+  min-height: 100%;
+  min-width: 100%;
+  background-color: var(--main-color);
+  color: var(--color-text);
+  overflow-x: hidden;
+  /* Smooth theme transition */
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Nerko One", cursive;
+  color: var(--color-text) !important;
+  transition: color 0.4s ease;
+}
+
+a,
+p,
+span {
+  color: var(--color-text) !important;
+  transition: color 0.4s ease;
+}
+
+ul {
+  list-style-position: inside;
+}
+
+.nav-item .nav-link.active,
+.nav-item .nav-link:hover {
+  color: #09c !important;
+  transition: color 0.5s;
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar {
+  width: 0.625rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--seconde-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--main-color);
+  border-radius: 50px;
+  box-shadow: 0 0 5px rgb(0 0 0 / 0.5) inset;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+.home .card {
+  filter: grayscale(0.7);
+  transition:
+    transform 0.5s,
+    filter 0.5s 0.1s,
+    box-shadow 0.3s;
+}
+
+header img {
+  max-height: 30vh;
+  object-fit: cover;
+}
+
+.home .card:hover {
+  transform: scale(1.05);
+  filter: grayscale(0);
+  box-shadow: 0 8px 25px var(--card-hover-shadow);
+}
+
+/* ============================================
+   NAVBAR
+   ============================================ */
+nav {
+  background-color: var(--nav-bg) !important;
+  margin-inline: auto;
+  margin-top: -30px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgb(0 0 0 / 0.7);
+  transition: background-color 0.4s ease;
+}
+
+/* ============================================
+   THEME TOGGLE BUTTON
+   ============================================ */
+.theme-toggle {
+  background: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.1rem;
+  transition:
+    transform 0.3s,
+    border-color 0.3s,
+    background-color 0.3s;
+  flex-shrink: 0;
+  margin-left: auto;
+  order: 1;
+}
+
+.theme-toggle:hover {
+  transform: rotate(30deg) scale(1.1);
+  border-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle .fa-sun {
+  display: none;
+}
+.theme-toggle .fa-moon {
+  display: inline-block;
+}
+
+[data-theme="light"] .theme-toggle .fa-sun {
+  display: inline-block;
+}
+[data-theme="light"] .theme-toggle .fa-moon {
+  display: none;
+}
+
+/* ============================================
+   DETAILS SECTION
+   ============================================ */
+.details {
+  background-color: var(--details-bg);
+  backdrop-filter: blur(4px);
+  min-height: 100vh;
+  transition: background-color 0.4s ease;
+}
+
+.details .btn-close {
+  filter: var(--close-btn-filter);
+}
+
+/* ============================================
+   LOADING
+   ============================================ */
+.loading {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  background-color: var(--loading-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.4s ease;
+}
+
+.loader {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 4px solid #fff;
+  border-right: 4px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  position: relative;
+}
+
+.loader::after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border-left: 4px solid #ff3d00;
+  border-bottom: 4px solid transparent;
+  animation: rotation 0.5s linear infinite reverse;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   PAGINATION
+   ============================================ */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  padding: 1rem 0 1rem;
+  margin: 2rem;
+}
+
+.pagination-container .page-btn {
+  background-color: var(--seconde-color);
+  color: var(--color-text);
+  border: none;
+  min-width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  font-family: "Comfortaa", cursive;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.25s,
+    transform 0.2s,
+    box-shadow 0.25s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.6rem;
+}
+
+.pagination-container .page-btn:hover {
+  background-color: var(--nav-bg);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--card-hover-shadow);
+}
+
+.pagination-container .page-btn.active {
+  background-color: var(--nav-bg);
+  color: #fff;
+  box-shadow: 0 4px 14px var(--card-hover-shadow);
+  transform: scale(1.08);
+}
+
+.pagination-container .page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE FIRST
+   ============================================ */
+
+/* --- Fluid typography --- */
+h1 {
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+}
+h3 {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+h5 {
+  font-size: clamp(0.9rem, 2vw, 1.25rem);
+}
+
+/* --- Extra-small screens (≤ 575px) --- */
+@media (max-width: 575.98px) {
+  nav {
+    margin-top: -15px;
+    border-radius: 10px;
+    padding: 0.5rem;
+  }
+
+  nav .container {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .navbar-toggler {
+    order: 2;
+  }
+
+  .navbar-brand {
+    font-size: 0.85rem !important;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.6rem 0.75rem !important;
+    min-height: 44px;
     display: flex;
-    justify-content: center;
     align-items: center;
- }
- .loader {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    display: inline-block;
-    border-top: 4px solid #fff;
-    border-right: 4px solid transparent;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-    position: relative;
- }
- .loader::after {
-    content: "";
-    box-sizing: border-box;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border-left: 4px solid #ff3d00;
-    border-bottom: 4px solid transparent;
-    animation: rotation 0.5s linear infinite reverse;
- }
- @keyframes rotation {
-    0% {
-       transform: rotate(0deg);
-    }
-    100% {
-       transform: rotate(360deg);
-    }
- }
- 
+  }
+
+  .home .card:hover {
+    transform: scale(1.02);
+  }
+
+  .details .row {
+    text-align: center;
+  }
+
+  .details .col-md-8 {
+    padding-top: 1rem;
+  }
+
+  .pagination-container .page-btn {
+    min-width: 36px;
+    height: 36px;
+    font-size: 0.78rem;
+  }
+}
+
+/* --- Small screens (576px – 767px) --- */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  nav {
+    margin-top: -20px;
+    border-radius: 14px;
+  }
+
+  .navbar-nav .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* --- Medium screens (768px – 991px) --- */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  nav {
+    margin-top: -25px;
+    border-radius: 16px;
+  }
+}
+
+/* --- Large screens (≥ 1200px) --- */
+@media (min-width: 1200px) {
+  .home .container {
+    max-width: 1320px;
+  }
+}
